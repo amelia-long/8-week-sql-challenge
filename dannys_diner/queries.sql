@@ -136,7 +136,7 @@ JOIN menu AS m
 	ON s.product_id = m.product_id
 JOIN members AS mem
 	ON s.customer_id = mem.customer_id
-WHERE s.order_date > mem.join_date
+WHERE s.order_date < mem.join_date
 GROUP BY s.customer_id
 ;
 
