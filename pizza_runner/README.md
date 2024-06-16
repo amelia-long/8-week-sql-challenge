@@ -2,6 +2,8 @@
 <a href="https://8weeksqlchallenge.com/case-study-2/" target="_blank">
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width = "400">
 </a>
+<h2>The Schema</h2>
+I started out with the given schema (1_schema.sql) and cleaned the data (2_data_cleaning.sql). However, once I started working on the case study questions I ran into problems which caused me to redesign the schema (3_schema_v2.sql). For example, in the original pizza_recipes table, the topping_ids are given as a comma delimited list. This made querying the pizza ingredients difficult, so instead I created a topping_id column and stored the pizza recipes as one row per topping instead. The original table names were confusing too, so I renamed customer_orders to order_items and runner_orders to orders. I created a new deliveries table to store the delivery data that had been in the runner_orders table before. When it came to adding a rating (see question D3), I simply added a rating column to the deliveries table. The pizza_runner_v2 EER diagram shows the final revised schema.
 <h2>Case Study Questions</h2>
 <h3>A. Pizza Metrics</h3>
 <ol>
