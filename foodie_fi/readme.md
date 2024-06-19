@@ -28,7 +28,7 @@ Lots of practice with ctes and window functions in this case study.
 
 ### 1. How many customers has Foodie-Fi ever had?
 
-```
+```sql
 SELECT
 COUNT(DISTINCT customer_id) AS total_customer_count
 FROM subscriptions;
@@ -38,7 +38,7 @@ Output: Foodie-Fi has a total customer count of exactly 1000.
 
 ### 2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
 
-```
+```sql
 SELECT
   DATE_FORMAT(start_date, "%Y") AS year,
   DATE_FORMAT(start_date,"%m") AS month,
@@ -56,7 +56,7 @@ Output: Peak month was Mar 2020 with 94 trial plan starts. Feb 2020 had the lowe
 
 ### 3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.
 
-```
+```sql
 SELECT
   p.plan_name,
   COUNT(start_date) AS event_count
@@ -75,7 +75,7 @@ Output: 71 churns, 60 pro monthly subscriptions, 63 pro annual subscriptions and
 
 ### 4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
 
-```
+```sql
 WITH cust_count AS
 (
 SELECT
@@ -101,7 +101,7 @@ Output: 30.7% churn rate
 
 Initial solution:
 
-```
+```sql
 WITH trial_end AS
 (
 SELECT
@@ -123,7 +123,7 @@ AND s.start_date = te.end_of_trial;
 
 I forgot about LAG(), which is a better way to do this:
 
-```
+```sql
 
 WITH lag_cte AS
 (
@@ -147,7 +147,7 @@ Output: 9% of customers churned straight after their free trial.
 
 Without window function:
 
-```
+```sql
 WITH trial_end AS
 (
 SELECT
@@ -172,7 +172,7 @@ GROUP BY p.plan_name;
 
 And with LEAD() window function:
 
-```
+```sql
 
 WITH lead_cte AS
 (
@@ -204,7 +204,7 @@ Output: 54.6% of customers chose the basic monthly plan, 32.5% chose the pro mon
 
 Here I use RANK() window function to get only those subscriptions which are active at 2020-12-31.
 
-```
+```sql
 WITH max_start AS
 (    
 SELECT 
@@ -235,7 +235,7 @@ Output: 32.6% pro monthly, 22.4% basic monthly, 19.5% pro annual, 1.9% on free t
 
 The Pro Annual plan is plan_id 3.
 
-```
+```sql
 SELECT
   COUNT(customer_id) AS pro_annual_upgrades
 FROM subscriptions
@@ -250,7 +250,7 @@ Output: 195 customers upgraded to an annual plan in 2020.
 
 Here I could have used a window function to get the minimum start date, but MIN() seemed more straightforward.
 
-```
+```sql
 WITH join_date AS
 (
 SELECT 
@@ -274,7 +274,7 @@ Output: average 105 days
 
 Some serious googling was needed to work out how to get the 30 day periods!
 
-```
+```sql
 -- get start dates of trial plans
 WITH trial_plan AS (
 SELECT
@@ -312,7 +312,7 @@ Output:
 
 My approach here gets a count of customers who have downgraded, however it would probably be better to use a window function to capture this data, because it is possible that a customer could have subscribed to pro monthly, then upgraded to pro annual, then downgraded to basic monthly (for example) and would be counted by this query. That's not necessarily what the company wants to know. A window function would capture direct downgrades from pro monthly to basic monthly and disregard indirect downgrades.
 
-```
+```sql
 WITH plan_1 AS
 (
 SELECT customer_id, start_date FROM subscriptions WHERE plan_id = 1 AND YEAR(start_date) = 2020
