@@ -8,7 +8,7 @@
 
 ### What is the total amount each customer spent at the restaurant?
 
-```
+```sql
 SELECT
   customer_id,
   SUM(price) AS total_spent
@@ -20,7 +20,7 @@ GROUP BY customer_id;
 
 ### How many days has each customer visited the restaurant?
 
-```
+```sql
 SELECT 
   customer_id,
   COUNT(DISTINCT order_date) AS num_days
@@ -30,7 +30,7 @@ GROUP BY customer_id;
 
 ### What was the first item from the menu purchased by each customer?
 
-```
+```sql
 WITH first_item AS 
 (
 SELECT
@@ -54,7 +54,7 @@ GROUP BY customer_id;
 
 ### What is the most purchased item on the menu and how many times was it purchased by all customers?
 
-```
+```sql
 SELECT
   m.product_name,
   COUNT(s.product_id) AS num_sales
@@ -67,7 +67,7 @@ ORDER BY num_sales DESC LIMIT 1;
 
 ### Which item was the most popular for each customer?
 
-```
+```sql
 WITH ranked_per_customer AS
 (
 SELECT
@@ -90,7 +90,7 @@ GROUP BY customer_id;
 ```
 ### Which item was purchased first by the customer after they became a member?
 
-```
+```sql
 WITH first_order_after_joining AS
 (
 SELECT 
@@ -115,7 +115,7 @@ WHERE ranked = 1;
 
 ### Which item was purchased just before the customer became a member?
 
-```
+```sql
 WITH last_order_before_joining AS
 (
 SELECT 
@@ -141,7 +141,7 @@ GROUP BY customer_id;
 
 ### What is the total items and amount spent for each member before they became a member?
 
-```
+```sql
 SELECT 
 	s.customer_id,
   SUM(m.price) AS total_spend,
@@ -156,7 +156,7 @@ GROUP BY s.customer_id;
 ```
 ### If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
-```
+```sql
 SELECT
 	s.customer_id,
   SUM(CASE WHEN m.product_name = "Sushi" THEN m.price * 20 ELSE m.price * 10 END) AS points
@@ -170,7 +170,7 @@ GROUP BY s.customer_id;
 ```
 ### In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
-```
+```sql
 SELECT 
 	s.customer_id,
   SUM(CASE 
