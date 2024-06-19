@@ -1,4 +1,9 @@
 # Case Study 3: Foodie-Fi
+
+<a href="https://8weeksqlchallenge.com/case-study-3/">
+<img src="https://8weeksqlchallenge.com/images/case-study-designs/3.png" width="400">
+</a>
+
 ## A. Customer Journey
 #### Customer 1
 Started free trial 1 Aug 2020, upgraded to basic monthly plan on 8 Aug at the end of their free trial period.
