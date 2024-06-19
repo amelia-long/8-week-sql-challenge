@@ -292,6 +292,8 @@ ORDER BY ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date)));
 
 ### 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
 
+My approach here gets a count of customers who have downgraded, however it would probably be better to use a window function to capture this data, because it is possible that a customer could have subscribed to pro monthly, then upgraded to pro annual, then downgraded to basic monthly (for example) and would be counted by this query. That's not necessarily what the company wants to know. A window function would capture direct downgrades from pro monthly to basic monthly and disregard indirect downgrades.
+
 ```
 WITH plan_1 AS
 (
