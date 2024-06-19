@@ -196,6 +196,9 @@ ORDER BY ROUND(COUNT(customer_id)/1000 * 100,1) DESC;
 
 Output: 54.6% of customers chose the basic monthly plan, 32.5% chose the pro monthly plan (but this is the default plan after the free trial, so this may include customers who forgot to either choose a plan or cancel), 3.7% of customers went straight for the pro annual plan, and 9.2% of customers cancelled.
 
+<img width="408" alt="Screenshot 2024-06-19 at 14 39 32" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/d042fa00-6f4a-4dc7-bccd-44853c6e30b6">
+
+
 
 ### 7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?
 
@@ -224,6 +227,9 @@ GROUP BY p.plan_name WITH ROLLUP;
 ```
 
 Output: 32.6% pro monthly, 22.4% basic monthly, 19.5% pro annual, 1.9% on free trial, and 23.6% churns.
+
+<img width="281" alt="Screenshot 2024-06-19 at 14 40 59" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/676aaf66-6059-413c-89c5-86c6af8ddf2f">
+
 
 ### 8. How many customers have upgraded to an annual plan in 2020?
 
@@ -296,6 +302,11 @@ WHERE ap.annual_date IS NOT NULL
 GROUP BY CONCAT(FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30 + 30)
 ORDER BY ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date)));
 ```
+
+Output:
+
+<img width="400" alt="Screenshot 2024-06-19 at 14 41 52" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/6abede2e-5696-4986-bfe0-a71de13b2d9d">
+
 
 ### 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
 
