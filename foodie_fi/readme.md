@@ -51,6 +51,9 @@ ORDER BY DATE_FORMAT(start_date,"%m") ASC;
 
 Output: Peak month was Mar 2020 with 94 trial plan starts. Feb 2020 had the lowest number of trial plan starts at 68.
 
+<img width="240" alt="Screenshot 2024-06-19 at 13 46 01" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/94f7264a-5634-457e-93db-1b17efdeb58e">
+
+
 ### 3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.
 
 ```
@@ -65,6 +68,10 @@ GROUP BY p.plan_name;
 ```
 
 Output: 71 churns, 60 pro monthly subscriptions, 63 pro annual subscriptions and 8 basic monthly subscriptions/
+
+<img width="208" alt="Screenshot 2024-06-19 at 13 47 14" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/506915f3-6a7c-4fa1-8e52-446beb763c0f">
+
+
 
 ### 4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
 
