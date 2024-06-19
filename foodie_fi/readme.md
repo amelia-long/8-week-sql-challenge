@@ -329,8 +329,8 @@ JOIN plan_2
 WHERE plan_1.start_date >= plan_2.start_date;
 ```
 
-Output: zero!
+Output: zero (which made me think I'd got it wrong, but after checking it's the correct answer).
 
 ## C. Challenge Payment Question
 
-This requires a recursive CTE to generate payment data: still a work in progress!
+This requires a recursive CTE to generate payment data: working out how to do this is still a work in progress ...
