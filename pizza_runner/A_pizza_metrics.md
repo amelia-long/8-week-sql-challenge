@@ -94,21 +94,22 @@ Output: 3 pizzas were delivered in order 4
 ## 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 
 ```sql
-SELECT
+SELECT 
   o.customer_id,
-  SUM(CASE WHEN amendment_id IS NULL THEN 1 ELSE 0 END) AS no_changes,
-  SUM(CASE WHEN amendment_id IS NOT NULL THEN 1 ELSE 0 END) AS changes
+  COUNT(DISTINCT oa.order_item_id) AS amended_pizzas,
+  COUNT(DISTINCT oi.order_item_id) - COUNT(DISTINCT oa.order_item_id) AS unamended_pizzas
 FROM orders o
 JOIN order_items oi
-  ON o.order_id = oi.order_id
+	ON o.order_id = oi.order_id
 LEFT JOIN order_amendments oa
-  ON oi.order_item_id = oa.order_item_id
+	ON oi.order_item_id = oa.order_item_id
 WHERE o.cancellation IS NULL
 GROUP BY o.customer_id
 ORDER BY o.customer_id;
 ```
 
-<img width="224" alt="Screenshot 2024-06-20 at 15 58 50" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/ebf7e7c6-ba1a-442f-8933-a45dfabc3bd8">
+<img width="292" alt="Screenshot 2024-06-21 at 00 10 12" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/ffef513c-5649-40eb-8a5b-70b6a4f1133e">
+
 
 ## 8. How many pizzas were delivered that had both exclusions and extras?
 
