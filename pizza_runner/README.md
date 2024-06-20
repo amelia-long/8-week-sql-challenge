@@ -2,26 +2,21 @@
 <a href="https://8weeksqlchallenge.com/case-study-2/" target="_blank">
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width = "400">
 </a>
-<h2>The Schema</h2>
-I started out with the given schema (1_schema.sql) and cleaned the data (2_data_cleaning.sql). However, once I started working on the case study questions I ran into problems which caused me to redesign the schema (3_schema_v2.sql). 
-<br><br>For example, in the original pizza_recipes table, the topping_ids are given as a comma delimited list. This made querying the pizza ingredients difficult, so instead I created a topping_id column and stored the pizza recipes as one row per topping instead. 
-<br><br>The original table names were confusing too, so I renamed customer_orders to order_items and runner_orders to orders. I created a new deliveries table to store the delivery data that had been in the runner_orders table before. When it came to adding a rating (see question D3), I simply added a rating column to the deliveries table. The pizza_runner_v2.png EER diagram shows the final revised schema. 
-<br><br>
+
+## The schema
+I started out with the [given schema](1_schema.sql) and [cleaned the data](2_data_cleaning.sql). However, once I started working on the case study questions I ran into problems which caused me to [redesign the schema](3_schema_v2.sql). 
+
+For example, in the original pizza_recipes table, the topping_ids are given as a comma delimited list. This made querying the pizza ingredients difficult, so instead I created a topping_id column and stored the pizza recipes as one row per topping instead. 
+
+The original table names were confusing too, so I renamed customer_orders to order_items and runner_orders to orders. I created a new deliveries table to store the delivery data that had been in the runner_orders table before. When it came to adding a rating (see question D3), I simply added a rating column to the deliveries table. The [EER diagram](pizza_runner_v2.png) shows the final revised schema. 
+
 Of course, in the real world there would also be a customers and delivery addresses table, as well as name and contact details for the runners!
-<h2>Case Study Questions</h2>
-<h3>A. Pizza Metrics</h3>
-<ol>
-<li>How many pizzas were ordered?</li>
-<li>How many unique customer orders were made?</li>
-<li>How many successful orders were delivered by each runner?</li>
-<li>How many of each type of pizza was delivered?</li>
-<li>How many Vegetarian and Meatlovers were ordered by each customer?</li>
-<li>What was the maximum number of pizzas delivered in a single order?</li>
-<li>For each customer, how many delivered pizzas had at least 1 change and how many had no changes?</li>
-<li>How many pizzas were delivered that had both exclusions and extras?</li>
-<li>What was the total volume of pizzas ordered for each hour of the day?</li>
-<li>What was the volume of orders for each day of the week?</li>
-</ol>
+
+## Case Study Questions
+
+### [A. Pizza Metrics](A_pizza_metrics.md)
+
+
 <h3>B. Runner and Customer Experience</h3>
 <ol>
 <li>How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)</li>
