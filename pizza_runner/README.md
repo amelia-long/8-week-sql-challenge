@@ -10,6 +10,8 @@ For example, in the original pizza_recipes table, the topping_ids are given as a
 
 The original table names were confusing too, so I renamed customer_orders to order_items and runner_orders to orders. I created a new deliveries table to store the delivery data that had been in the runner_orders table before. When it came to adding a rating (see question D3), I simply added a rating column to the deliveries table. The [EER diagram](pizza_runner_v2.png) shows the final revised schema. 
 
+![Pizza Runner v2 EER diagram](pizza_runner_v2.png)
+
 Of course, in the real world there would also be a customers and delivery addresses table, as well as name and contact details for the runners!
 
 ## Case Study Questions
