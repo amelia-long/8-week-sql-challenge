@@ -6,7 +6,7 @@
 
 ## Case Study Questions
 
-### What is the total amount each customer spent at the restaurant?
+### 1. What is the total amount each customer spent at the restaurant?
 
 ```sql
 SELECT
@@ -22,7 +22,7 @@ GROUP BY customer_id;
 
 
 
-### How many days has each customer visited the restaurant?
+### 2. How many days has each customer visited the restaurant?
 
 ```sql
 SELECT 
@@ -35,7 +35,7 @@ GROUP BY customer_id;
 <img width="204" alt="Screenshot 2024-06-19 at 17 08 00" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/3aaa3727-25a3-4250-b96d-f6f26bfd0d45">
 
 
-### What was the first item from the menu purchased by each customer?
+### 3. What was the first item from the menu purchased by each customer?
 
 ```sql
 WITH first_item AS 
@@ -61,7 +61,7 @@ GROUP BY customer_id;
 <img width="217" alt="Screenshot 2024-06-19 at 17 08 39" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/341fb70f-a9a0-40db-a3ac-4d3468260c20">
 
 
-### What is the most purchased item on the menu and how many times was it purchased by all customers?
+### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
 ```sql
 SELECT
@@ -77,7 +77,7 @@ ORDER BY num_sales DESC LIMIT 1;
 <img width="217" alt="Screenshot 2024-06-19 at 17 09 09" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/e2ac4d6e-5120-48a1-9287-734d03854872">
 
 
-### Which item was the most popular for each customer?
+### 5. Which item was the most popular for each customer?
 
 ```sql
 WITH ranked_per_customer AS
@@ -104,7 +104,7 @@ GROUP BY customer_id;
 <img width="217" alt="Screenshot 2024-06-19 at 17 09 37" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/b5a95266-b413-4eae-91dc-a4301c963ea0">
 
 
-### Which item was purchased first by the customer after they became a member?
+### 6. Which item was purchased first by the customer after they became a member?
 
 ```sql
 WITH first_order_after_joining AS
@@ -132,7 +132,7 @@ WHERE ranked = 1;
 <img width="234" alt="Screenshot 2024-06-19 at 17 10 09" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/b939f60c-7efc-4217-9e09-613db263ffe5">
 
 
-### Which item was purchased just before the customer became a member?
+### 7. Which item was purchased just before the customer became a member?
 
 ```sql
 WITH last_order_before_joining AS
@@ -161,7 +161,7 @@ GROUP BY customer_id;
 <img width="234" alt="Screenshot 2024-06-19 at 17 10 39" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/713d8040-c74a-4c89-9bdc-2ffa71b5d13f">
 
 
-### What is the total items and amount spent for each member before they became a member?
+### 8. What is the total items and amount spent for each member before they became a member?
 
 ```sql
 SELECT 
@@ -180,7 +180,7 @@ GROUP BY s.customer_id;
 <img width="314" alt="Screenshot 2024-06-19 at 17 11 11" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/2657b4ad-8a36-41ec-b7a0-be27bd4696e6">
 
 
-### If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+### 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 ```sql
 SELECT
@@ -198,7 +198,7 @@ GROUP BY s.customer_id;
 <img width="184" alt="Screenshot 2024-06-19 at 17 11 44" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/5b98a9ff-b39e-4e05-bc3e-52ca44f4e05d">
 
 
-### In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
 ```sql
 SELECT 
