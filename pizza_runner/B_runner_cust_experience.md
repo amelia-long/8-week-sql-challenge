@@ -87,15 +87,17 @@ Output: 43 minutes, 49 seconds
 ```sql
 SELECT 
   d.runner_id,
+  d.order_id,
   ROUND(AVG((d.distance_km/(MINUTE(TIMEDIFF(d.delivery_time,d.pickup_time)))) * 60),2) AS avg_speed
 FROM deliveries AS d
 JOIN orders AS o
   ON d.order_id = o.order_id
 WHERE o.cancellation IS NULL
-GROUP BY d.runner_id;
+GROUP BY d.runner_id, d.order_id;
 ```
 
-Output: Runner 1 45.24 kph, Runner 2 62.17 kph, Runner 3 40 kph.
+<img width="201" alt="Screenshot 2024-06-21 at 00 23 45" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/6a770801-ff24-43af-8385-142bf8acae4a">
+
 
 ## What is the successful delivery percentage for each runner?
 
