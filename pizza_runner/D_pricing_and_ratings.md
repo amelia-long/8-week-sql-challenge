@@ -49,6 +49,8 @@ FROM extras, pizza;
 
 In my schema redesign I created a deliveries table and added a rating column to this.
 
+<img width="184" alt="Screenshot 2024-06-20 at 15 40 18" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/809ba5d9-ba42-4713-9743-dac4a0eb83fd">
+
 ## Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?
   - customer_id
   - order_id
