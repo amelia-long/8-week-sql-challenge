@@ -67,11 +67,13 @@ JOIN order_items oi
   ON o.order_id = oi.order_id
 JOIN pizzas p
   ON oi.pizza_id = p.pizza_id
+WHERE o.cancellation IS NULL
 GROUP BY o.customer_id, p.pizza_name
 ORDER BY o.customer_id, p.pizza_name;
 ```
 
-<img width="315" alt="Screenshot 2024-06-20 at 15 57 40" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/9b3a6d09-6d89-4e29-a602-c30daf983f6e">
+<img width="282" alt="Screenshot 2024-06-20 at 20 25 57" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/0d2f1b50-2d0c-4771-abe7-15987f4a580f">
+
 
 ## 6. What was the maximum number of pizzas delivered in a single order?
 
