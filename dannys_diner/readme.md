@@ -10,8 +10,8 @@
 
 ```sql
 SELECT
-  customer_id,
-  SUM(price) AS total_spent
+	customer_id,
+	SUM(price) AS total_spent
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -26,8 +26,8 @@ GROUP BY customer_id;
 
 ```sql
 SELECT 
-  customer_id,
-  COUNT(DISTINCT order_date) AS num_days
+	customer_id,
+	COUNT(DISTINCT order_date) AS num_days
 FROM sales
 GROUP BY customer_id;
 ```
@@ -41,22 +41,21 @@ GROUP BY customer_id;
 WITH first_item AS 
 (
 SELECT
-  s.customer_id,
-  s.order_date,
-  m.product_name,
-  DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date ASC) AS ranked
+	s.customer_id,
+	s.order_date,
+	m.product_name,
+	DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date ASC) AS ranked
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
 ORDER BY s.customer_id, ranked ASC, order_date ASC
 )
 SELECT
-  customer_id,
-  GROUP_CONCAT(DISTINCT product_name) AS first_order_items
+	customer_id,
+	GROUP_CONCAT(DISTINCT product_name) AS first_order_items
 FROM first_item
 WHERE ranked = 1
 GROUP BY customer_id;
-
 ```
 
 <img width="217" alt="Screenshot 2024-06-19 at 17 08 39" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/341fb70f-a9a0-40db-a3ac-4d3468260c20">
@@ -66,8 +65,8 @@ GROUP BY customer_id;
 
 ```sql
 SELECT
-  m.product_name,
-  COUNT(s.product_id) AS num_sales
+	m.product_name,
+  	COUNT(s.product_id) AS num_sales
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -84,10 +83,10 @@ ORDER BY num_sales DESC LIMIT 1;
 WITH ranked_per_customer AS
 (
 SELECT
-  s.customer_id,
-  m.product_name,
-  COUNT(s.product_id) AS num_sales,
-  RANK() OVER(PARTITION BY s.customer_id ORDER BY COUNT(s.product_id) DESC) AS ranked
+	s.customer_id,
+	m.product_name,
+	COUNT(s.product_id) AS num_sales,
+	RANK() OVER(PARTITION BY s.customer_id ORDER BY COUNT(s.product_id) DESC) AS ranked
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -95,8 +94,8 @@ GROUP BY s.customer_id, m.product_name
 ORDER BY s.customer_id ASC, num_sales DESC
 )
 SELECT 
-  customer_id, 
-  GROUP_CONCAT(DISTINCT product_name) AS favorite_items 
+	customer_id, 
+	GROUP_CONCAT(DISTINCT product_name) AS favorite_items 
 FROM ranked_per_customer
 WHERE ranked = 1 
 GROUP BY customer_id;
@@ -112,10 +111,10 @@ WITH first_order_after_joining AS
 (
 SELECT 
 	s.customer_id,
-  m.product_name,
-  s.order_date,
-  mem.join_date,
-  RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date ASC) AS ranked
+	m.product_name,
+	s.order_date,
+	mem.join_date,
+	RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date ASC) AS ranked
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -124,8 +123,8 @@ JOIN members AS mem
 WHERE s.order_date > mem.join_date
 )
 SELECT 
-  customer_id, 
-  product_name AS first_item_after_joining
+	customer_id, 
+	product_name AS first_item_after_joining
 FROM first_order_after_joining
 WHERE ranked = 1;
 ```
@@ -140,10 +139,10 @@ WITH last_order_before_joining AS
 (
 SELECT 
 	s.customer_id,
-  m.product_name,
-  s.order_date,
-  mem.join_date,
-  RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date DESC) AS ranked
+	m.product_name,
+	s.order_date,
+	mem.join_date,
+	RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date DESC) AS ranked
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -153,7 +152,7 @@ WHERE s.order_date < mem.join_date
 )
 SELECT 
 	customer_id, 
-  GROUP_CONCAT(DISTINCT product_name) AS last_item_before_joining
+	GROUP_CONCAT(DISTINCT product_name) AS last_item_before_joining
 FROM last_order_before_joining
 WHERE ranked = 1
 GROUP BY customer_id;
@@ -167,8 +166,8 @@ GROUP BY customer_id;
 ```sql
 SELECT 
 	s.customer_id,
-  SUM(m.price) AS total_spend,
-  COUNT(s.product_id) AS total_items_ordered
+	SUM(m.price) AS total_spend,
+	COUNT(s.product_id) AS total_items_ordered
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -186,7 +185,7 @@ GROUP BY s.customer_id;
 ```sql
 SELECT
 	s.customer_id,
-  SUM(CASE WHEN m.product_name = "Sushi" THEN m.price * 20 ELSE m.price * 10 END) AS points
+	SUM(CASE WHEN m.product_name = "Sushi" THEN m.price * 20 ELSE m.price * 10 END) AS points
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
@@ -204,13 +203,12 @@ GROUP BY s.customer_id;
 ```sql
 SELECT 
 	s.customer_id,
-  SUM(CASE 
-    WHEN s.order_date >= mem.join_date AND s.order_date <= DATE_ADD(mem.join_date, INTERVAL 7 DAY) THEN m.price * 20
-    WHEN m.product_name = "Sushi" AND s.order_date > DATE_ADD(mem.join_date, INTERVAL 7 DAY) THEN m.price * 20
-    WHEN m.product_name != "Sushi" AND s.order_date > DATE_ADD(mem.join_date, INTERVAL 7 DAY) AND s.order_date < 2023-01-31 THEN m.price * 10
-    ELSE null
-    END)
-    AS points
+	SUM(CASE 
+		WHEN s.order_date >= mem.join_date AND s.order_date <= DATE_ADD(mem.join_date, INTERVAL 7 DAY) THEN m.price * 20
+		WHEN m.product_name = "Sushi" AND s.order_date > DATE_ADD(mem.join_date, INTERVAL 7 DAY) THEN m.price * 20
+		WHEN m.product_name != "Sushi" AND s.order_date > DATE_ADD(mem.join_date, INTERVAL 7 DAY) AND s.order_date < 2023-01-31 THEN m.price * 10
+		ELSE null
+	END) AS points
 FROM sales AS s
 JOIN menu AS m
 	ON s.product_id = m.product_id
