@@ -13,6 +13,8 @@ JOIN pizzas p
 WHERE cancellation IS NULL;
 ```
 
+Output: $138
+
 ## What if there was an additional $1 charge for any pizza extras? Add cheese is $1 extra
 
 ```sql
@@ -44,6 +46,8 @@ SELECT
   pizza.pizza_price + extras.extras_price AS total_revenue
 FROM extras, pizza;
 ```
+
+Output: $143
 
 ## The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.
 
@@ -110,6 +114,10 @@ JOIN average_speed
 	ON d.runner_id = average_speed.runner_id
 WHERE o.cancellation IS NULL;
 ```
+
+<img width="1203" alt="Screenshot 2024-06-20 at 16 18 23" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/311974c5-fd87-42a0-a04f-8db6eba9c68f">
+
+
 ## If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
 ```sql
@@ -137,3 +145,5 @@ SELECT
   ROUND(pizza_total.tot - runner_pay.tot,2) AS revenue_after_runner_pay
 FROM pizza_total,runner_pay;
 ```
+
+Output: $94.80
