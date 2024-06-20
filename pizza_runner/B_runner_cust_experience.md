@@ -11,6 +11,11 @@ FROM runners
 GROUP BY WEEKOFYEAR(registration_date), YEAR(registration_date);
 ```
 
+Output: I couldn't work out how to get around MySQL's insistence upon designating the first week of the year as number 53.
+
+<img width="297" alt="Screenshot 2024-06-20 at 16 01 54" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/284c4f07-be9b-474d-8b76-6429457bc22d">
+
+
 ## What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
 
 ```sql
@@ -23,6 +28,8 @@ JOIN orders o
 WHERE o.cancellation IS NULL
 GROUP BY d.runner_id;
 ```
+
+Output: Average pickup times for Runner 1 was 14 minutes, Runner 2 was 20 minutes, and Runner 3 was 10 minutes.
 
 ## Is there any relationship between the number of pizzas and how long the order takes to prepare?
 
@@ -40,6 +47,12 @@ WHERE o.cancellation IS NULL
 GROUP BY o.order_id, prep_time
 ORDER BY num_pizzas DESC;
 ```
+
+Output: the higher the number of pizzas in the order, the longer it takes to prepare with a time per pizza of on average 10 minutes.
+
+<img width="249" alt="Screenshot 2024-06-20 at 16 04 08" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/7056e9c7-0055-437e-889b-562b17ebccc9">
+
+
 ## What was the average distance travelled for each customer?
 
 ```sql
@@ -53,6 +66,10 @@ JOIN deliveries d
 WHERE o.cancellation IS NULL
 GROUP BY o.customer_id;
 ```
+
+<img width="249" alt="Screenshot 2024-06-20 at 16 05 40" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/c09db930-c505-40e4-9685-d78379a1dfe6">
+
+
 ## What was the difference between the longest and shortest delivery times for all orders?
 
 ```sql
@@ -62,6 +79,8 @@ FROM deliveries AS d
 JOIN orders AS o
   ON d.order_id = o.order_id;
 ```
+
+Output: 43 minutes, 49 seconds
 
 ## What was the average speed for each runner for each delivery and do you notice any trend for these values?
 
@@ -75,6 +94,9 @@ JOIN orders AS o
 WHERE o.cancellation IS NULL
 GROUP BY d.runner_id;
 ```
+
+Output: Runner 1 45.24 kph, Runner 2 62.17 kph, Runner 3 40 kph.
+
 ## What is the successful delivery percentage for each runner?
 
 ```sql
@@ -88,3 +110,5 @@ JOIN orders AS o
   ON d.order_id = o.order_id
 GROUP BY runner_id;
 ```
+
+Output: Runner 1 delivered 100% of their orders, Runner 2 75% and Runner 3 50%.
