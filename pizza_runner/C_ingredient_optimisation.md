@@ -14,6 +14,9 @@ JOIN toppings t
 GROUP BY p.pizza_name;
 ```
 
+<img width="751" alt="Screenshot 2024-06-20 at 16 09 53" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/466c1d2c-27a6-4585-81e4-3687fe37bb0d">
+
+
 ## What was the most commonly added extra?
 
 ```sql
@@ -28,6 +31,8 @@ GROUP BY t.topping_name
 ORDER BY num_extras DESC LIMIT 1;
 ```
 
+Output: Bacon, which was added 4 times.
+
 ## What was the most common exclusion?
 
 ```sql
@@ -41,6 +46,9 @@ WHERE oa.amendment_type = 0
 GROUP BY t.topping_name
 ORDER BY num_exclusions DESC LIMIT 1;
 ```
+
+Output: Cheese, which was excluded 4 times.
+
 ## Generate an order item for each record in the customers_orders table in the format of one of the following:
 - Meat Lovers
 - Meat Lovers - Exclude Beef
@@ -78,6 +86,10 @@ SELECT
 FROM menu_cte
 GROUP BY order_id, order_item_id;
 ```
+
+<img width="584" alt="Screenshot 2024-06-20 at 16 11 09" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/8467a317-25d5-48f1-966b-efc396945193">
+
+
 ## Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
 - For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
 
@@ -120,6 +132,10 @@ SELECT
 FROM standard_toppings
 JOIN amendments USING (pizza_id);
 ```
+
+<img width="1004" alt="Screenshot 2024-06-20 at 16 11 47" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/e4375350-6343-4832-bf9e-aee844d74577">
+
+
 ## What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
 
 ```sql
@@ -163,3 +179,5 @@ JOIN adjustments a
   ON tt.topping_name = a.topping_name
 ORDER BY adjusted_total DESC;
 ```
+
+<img width="467" alt="Screenshot 2024-06-20 at 16 12 29" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/efb4315f-2908-4ddc-b284-4e9d09fdfccd">
