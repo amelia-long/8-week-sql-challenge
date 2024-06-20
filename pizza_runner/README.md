@@ -16,6 +16,6 @@ Of course, in the real world there would also be a customers and delivery addres
 
 ### [A. Pizza Metrics](A_pizza_metrics.md)
 ### [B. Runner and Customer Experience](B_runner_cust_experience.md)
-### C. Ingredient Optimisation
+### [C. Ingredient Optimisation](C_ingredient_optimisation.md)
 ### D. Pricing and Ratings
 ### E. Bonus Question
