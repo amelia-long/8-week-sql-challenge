@@ -304,7 +304,9 @@ Output:
 
 <img width="355" alt="Upgrades to annual plan by date period" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/c7161042-bde5-4db6-a7fc-5b165ae17e95">
 
-And here's a variation on this query to break down when customers cancel their subscriptions.
+#### Variation
+
+This query allows us to see the distribution of cancellations, showing that the most likely time for a customer to cancel is just after the free trial period (unsurprisingly).
 
 ```sql
 WITH trial_plan AS (
