@@ -51,7 +51,7 @@ ORDER BY DATE_FORMAT(start_date,"%m") ASC;
 
 Output: Peak month was Mar 2020 with 94 trial plan starts. Feb 2020 had the lowest number of trial plan starts at 68.
 
-<img width="240" alt="Screenshot 2024-06-19 at 13 46 01" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/94f7264a-5634-457e-93db-1b17efdeb58e">
+<img width="240" alt="Distribution of trial plans by month" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/94f7264a-5634-457e-93db-1b17efdeb58e">
 
 
 ### 3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.
@@ -69,7 +69,7 @@ GROUP BY p.plan_name;
 
 Output: 71 churns, 60 pro monthly subscriptions, 63 pro annual subscriptions and 8 basic monthly subscriptions/
 
-<img width="208" alt="Screenshot 2024-06-19 at 13 47 14" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/506915f3-6a7c-4fa1-8e52-446beb763c0f">
+<img width="208" alt="Plans after 2020" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/506915f3-6a7c-4fa1-8e52-446beb763c0f">
 
 
 
@@ -196,7 +196,7 @@ ORDER BY ROUND(COUNT(customer_id)/1000 * 100,1) DESC;
 
 Output: 54.6% of customers chose the basic monthly plan, 32.5% chose the pro monthly plan (but this is the default plan after the free trial, so this may include customers who forgot to either choose a plan or cancel), 3.7% of customers went straight for the pro annual plan, and 9.2% of customers cancelled.
 
-<img width="408" alt="Screenshot 2024-06-19 at 14 39 32" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/d042fa00-6f4a-4dc7-bccd-44853c6e30b6">
+<img width="408" alt="Plan takeup after free trial" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/d042fa00-6f4a-4dc7-bccd-44853c6e30b6">
 
 
 
@@ -228,7 +228,7 @@ GROUP BY p.plan_name WITH ROLLUP;
 
 Output: 32.6% pro monthly, 22.4% basic monthly, 19.5% pro annual, 1.9% on free trial, and 23.6% churns.
 
-<img width="281" alt="Screenshot 2024-06-19 at 14 40 59" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/676aaf66-6059-413c-89c5-86c6af8ddf2f">
+<img width="281" alt="Distribution of customers by plan" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/676aaf66-6059-413c-89c5-86c6af8ddf2f">
 
 
 ### 8. How many customers have upgraded to an annual plan in 2020?
@@ -302,8 +302,38 @@ ORDER BY ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date)));
 
 Output:
 
-<img width="355" alt="Screenshot 2024-06-21 at 08 38 09" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/c7161042-bde5-4db6-a7fc-5b165ae17e95">
+<img width="355" alt="Upgrades to annual plan by date period" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/c7161042-bde5-4db6-a7fc-5b165ae17e95">
 
+And here's a variation on this query to break down when customers cancel their subscriptions.
+
+```sql
+WITH trial_plan AS (
+SELECT
+	customer_id, 
+	start_date AS trial_date
+FROM subscriptions
+WHERE plan_id = 0
+),
+-- get start dates of churn
+churn_date AS (
+SELECT
+	customer_id,
+	start_date as churn_date
+FROM subscriptions
+WHERE plan_id = 4
+)
+SELECT 
+	-- 30 day periods
+    CONCAT(FLOOR(DATEDIFF(cd.churn_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(cd.churn_date,tp.trial_date)/30) * 30 + 30) AS period,
+    COUNT(tp.customer_id) AS num_churns,
+    ROUND(AVG(DATEDIFF(cd.churn_date,tp.trial_date))) AS avg_days_to_churn
+FROM trial_plan tp
+JOIN churn_date cd USING (customer_id)
+GROUP BY CONCAT(FLOOR(DATEDIFF(cd.churn_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(cd.churn_date,tp.trial_date)/30) * 30 + 30)
+ORDER BY ROUND(AVG(DATEDIFF(cd.churn_date,tp.trial_date)));
+```
+
+<img width="355" alt="Churn breakdown by date period" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/59731442-3bdd-4eed-80be-30b8b943ba3a">
 
 
 ### 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
