@@ -275,37 +275,35 @@ Output: average 105 days
 Some serious googling was needed to work out how to get the 30 day periods!
 
 ```sql
--- get start dates of trial plans
 WITH trial_plan AS (
 SELECT
-    customer_id,
-    start_date AS trial_date
+	customer_id, 
+	start_date AS trial_date
 FROM subscriptions
 WHERE plan_id = 0
 ),
--- get start dates of annual plans
 annual_plan AS (
 SELECT
-  customer_id,
-  start_date as annual_date
+	customer_id,
+	start_date as annual_date
 FROM subscriptions
 WHERE plan_id = 3
 )
 SELECT 
--- 30 day periods
-  CONCAT(FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30 + 30) AS period,
-  COUNT(tp.customer_id) AS number_of_upgrades,
-  ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date))) AS avg_days_to_upgrade
+	-- 30 day periods
+	CONCAT(FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30 + 30) AS period,
+    	COUNT(tp.customer_id) AS num_upgrades,
+    	ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date))) AS avg_days_to_upgrade
 FROM trial_plan tp
-JOIN annual_plan ap ON tp.customer_id = ap.customer_id
-WHERE ap.annual_date IS NOT NULL
+JOIN annual_plan ap USING (customer_id)
 GROUP BY CONCAT(FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30," - ",FLOOR(DATEDIFF(ap.annual_date,tp.trial_date)/30) * 30 + 30)
 ORDER BY ROUND(AVG(DATEDIFF(ap.annual_date,tp.trial_date)));
 ```
 
 Output:
 
-<img width="400" alt="Screenshot 2024-06-19 at 14 41 52" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/6abede2e-5696-4986-bfe0-a71de13b2d9d">
+<img width="355" alt="Screenshot 2024-06-21 at 08 38 09" src="https://github.com/amelia-long/8-week-sql-challenge/assets/158860669/c7161042-bde5-4db6-a7fc-5b165ae17e95">
+
 
 
 ### 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
